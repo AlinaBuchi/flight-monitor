@@ -1,0 +1,57 @@
+[
+    {
+        "airplane_id": 521391,
+        "model": "Boeing 787",
+        "reason": "destination",
+        "flight_time": "2023-03-07T21:00:00",
+        "origin": "Rome",
+        "destination": "Springvale",
+        "flight_type": "International",
+        "departure_time": null,
+        "gate_number": null
+    },
+    {
+        "airplane_id": 173451,
+        "model": "Airbus A320",
+        "reason": "destination",
+        "flight_time": "2023-03-07T13:05:00",
+        "origin": "Autumnvale",
+        "destination": "Springvale",
+        "flight_type": "Domestic",
+        "departure_time": null,
+        "gate_number": null
+    },
+    {
+        "airplane_id": 927471,
+        "model": "Boeing 777",
+        "reason": "destination",
+        "flight_time": "2023-03-07T21:00:00",
+        "origin": "Rome",
+        "destination": "Springvale",
+        "flight_type": "International",
+        "departure_time": null,
+        "gate_number": null
+    },
+    {
+        "airplane_id": 678369,
+        "model": "Airbus A330",
+        "reason": "destination",
+        "flight_time": "2023-03-07T07:00:00",
+        "origin": "Dubai",
+        "destination": "Springvale",
+        "flight_type": "International",
+        "departure_time": null,
+        "gate_number": null
+    },
+    {
+        "airplane_id": 897753,
+        "model": "Boeing 737",
+        "reason": "destination",
+        "flight_time": "2023-03-07T07:00:00",
+        "origin": "Rome",
+        "destination": "Springvale",
+        "flight_type": "International",
+        "departure_time": null,
+        "gate_number": null
+    }
+]

@@ -1,0 +1,86 @@
+Un aeroport din Springvale are nevoie de un sistem de monitorizare pentru avioanele care aterizeaza.
+Fiind un aeroport de dimensiune relativ mica, aeroportul dispune de 4 porti:
+- 3 de zboruri domestice
+- 1 de zboruri internationale
+
+In cazuri de urgenta, exista si un hangar disponibil pentru reparatiile aeronavelor.
+
+Aeroportul dispune de 2 piste de aterizare.
+Avioanele pentru zboruri domestice vin din ora in ora, iar cele internationale vin doar la 07:00 sau 21:00.
+Odata aterizat, un avion este obligat sa stea 2 ore pentru verificari, alimentare, imbarcare etc.
+Avioanele care vin pentru reparatii stau intre 2-5 zile.
+
+
+Pentru buna functionare a aeroportului si conformitatea cu anumite standarde, urmatoarele trebuie inventariate constant:
+- avion
+	- numar de identificare
+	- model avion
+	- tip zbor (DOM/INT)
+	- sursa
+	- destinatie (la cele domestice este aeroportul Springvale)
+
+- aterizare
+	- motiv (escala, destinatie, reparatii)
+	- ora aterizare
+	- pista folosita
+
+- plecare
+	- poarta
+	- ora plecarii
+	- pista folosita
+
+
+Proiectul are urmatoarele cerinte minime:
+(Advanced python)
+- proiect poetry
+- 3 obiecte python
+	- o metoda de sistem
+- 1 decorator
+- o metoda de serializare (JSON/CSV/PICKLE)
+----------------------------------------------------------------------
+
+Managerii aeroportului sunt in discutii in legatura cu numarul de porti.
+Ei spun ca numarul de porti este prea mic, rezultand in avioane care nu pot ateriza.
+Arhitectii aeroportului nu sunt de acord cu managerii, asa ca doresc sa faca o simulare.
+
+Pe baza sistemului existent se adauga urmatoarele:
+- un avion de zbor domestic care:
+    - aterizeaza pe una din cele 2 piste
+    - parcheaza la o poarta libera
+    - pleaca de la poarta dupa o ora
+- un avion de zboruri internationale care se comporta la fel dar:
+    - parcheaza la poarta de zboruri internationale
+    - pleaca in functie de ora de sosire:
+        - aterizare la 7:00 -> plecare la 21:00
+        - aterizare la 21:00 -> plecare la 7:00
+
+- un avion care apare la momente arbitrare:
+    - acesta aterizeaza si se duce in hangarul de reparatii
+
+Cele de mai sus vor rula in paralel cu sistemul initial.
+O schema a sistemului implementat trebuie data pentru a solutiona dezbaterea.
+Aceasta va trebui sa reflecte mereu situatia curenta a proiectului.
+
+Proiectul are urmatoarele cerinte minime:
+(Threads & Diagrams)
+- diagrama UML a proiectului
+- o implementare de paralelism:
+    - Threads
+    - Daemon threads
+    - Process
+--------------------------------------------
+
+O comisie de evaluare a fost programata sa vina sa evalueze sistemul aeroportului.
+Comisia a trimis o serie de verificari care vor fi facute.
+
+Desi sistemul prezent indeplineste majoritatea cerintelor, o modernizare nu ar strica.
+
+Proiectul are urmatoarele cerinte minime:
+- implementarea claselor de model cu pydantic
+- teste care acopera functionalitatile principale ale sistemului.
+    - teste care verifica happy path-ul (ceea ce ar trebui sa se intample)
+    - teste care verifica corner cases (cazuri exceptionale)
+    - teste care verifica exceptions (cazuri care duc sau ar trebui sa duca la erori)
+
+- includerea de type-hinting
+- standardizare folosind un linter
