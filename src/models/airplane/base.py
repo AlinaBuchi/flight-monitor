@@ -12,4 +12,3 @@ class Airplane(BaseModel):
     flight_type: str
     departure_time: datetime | None = None
     gate_number: int | None = None
-

@@ -6,11 +6,10 @@ from typing import Callable, Union
 from datetime import datetime, timedelta
 
 # local app imports
-from models.airplane import (
+from models import (
     AirplaneDomesticFlight,
     AirplaneInternationalFlight,
     Airplane
-
 )
 from airport import Airport
 
@@ -45,7 +44,7 @@ def get_random_airplane_attributes() -> dict[str, Union[int, str, str, datetime,
         destination=rnd.choices(
             ['Istanbul', 'Bali', 'Lisbon', 'Bucharest', 'Nice', 'Autumnvale', 'Wintervale', 'Summervale', 'New York',
              'Springvale'], weights=(5, 5, 5, 5, 5, 5, 5, 5, 5, 60), k=1)[0],
-        flight_type=rnd.choices(['Domestic', 'International'], weights=(70, 30), k=1)[0])
+        flight_type=rnd.choices(['Domestic', 'International'], weights=(30, 70), k=1)[0])
     if random_attr_dict['flight_type'] == 'Domestic':
         random_attr_dict['flight_time'] = datetime(2023, 3, 7, 13, 00) + timedelta(minutes=rnd.randrange(60))
     elif random_attr_dict['flight_type'] == 'International':
@@ -69,6 +68,11 @@ def generate_random_airplane() -> Airplane:
                 return AirplaneInternationalFlight(**data)
 
 
+def do_backup_json() -> None:
+    airport.export_arrivals()
+    airport.export_departures()
+
+
 def execution_duration(func: Callable[[...], None]) -> Callable:
     """
     Decorator: Shows the execution duration of the function object passed
@@ -89,27 +93,16 @@ def thread_consume_arrival_queue() -> None:
     Queue to consume arrival queue if we have items.
     if plane can't arrive after being taken from the queue, we put it back in again.
     """
-    count = 0
-    done = False
     while True:
-        time.sleep(1)
-        if airport.plane_queue.qsize() > 0:
-            plane = airport.plane_queue.get()
+        time.sleep(5)
+        if airport.arrivals_queue.qsize() > 0:
+            plane = airport.arrivals_queue.get()
             print(f'THREAD CONSUME ARRIVAL START - {plane.airplane_id} - {plane.flight_type} \n')
-            is_arrived = airport.arrive_plane(plane)
-            if not is_arrived:
-                # add to the queue
-                airport.plane_queue.put(plane)
-            else:
-                print('Airplane has arrived from the another try')
-        elif done:
-            break
+            airport.arrive_plane(plane)
+            print('Airplane has arrived from another try')
         else:
-            count += 1
-            print(f'Empty arrival plane_queue ...{count=}')
-            time.sleep(1)
-            if count == 10:
-                done = True
+            print('Arrival queue break')
+            break
 
 
 @execution_duration
@@ -120,26 +113,20 @@ def thread_consume_depart_queue() -> None:
         Count to break the loop - in place.
         """
     count = 0
-    done = False
     time.sleep(10)
     while True:
-        if airport.awaiting_departure.qsize() > 0:
-            plane = airport.awaiting_departure.get()
+        time.sleep(5)
+        if airport.departures_queue.qsize() > 0:
+            plane = airport.departures_queue.get()
             print(f'THREAD CONSUME DEPARTURE START - {plane.airplane_id} - {plane.flight_type} \n')
-            is_departed = airport.depart_plane(plane, 3)
-            if not is_departed:
-                # add to the queue
-                airport.awaiting_departure.put(plane)
-            else:
-                print('Airplane has departed from consumer queue')
-        elif done:
-            break
-        else:
+            airport.depart_plane(plane, 3)
+
+            print('Airplane has departed from consumer queue')
+        elif airport.departures_queue.qsize() == 0:
             count += 1
-            print(f'Empty awaiting_departure ...{count=}')
-            time.sleep(2)
-            if count == 10:
-                done = True
+            if count == 15:
+                print('Departure queue break')
+                break
 
 
 @execution_duration
@@ -154,39 +141,23 @@ def thread_produce_queue_arrive():
         # generate a value
         print()
         plane = generate_random_airplane()
+        result = plane.dict()
+        result.update({'history': []})
+
+        airport.connector.insert_one("planes", result)
         print('-----RANDOM PLANE -> GENERATED-----')
         print()
         print(plane)
-        is_arrived = airport.arrive_plane(plane)
-        if not is_arrived:
-            time.sleep(2)
-            # add to the queue
-            airport.plane_queue.put(plane)
-        else:
-            print('Airplane has arrived from the first try')
-    # all done
+
+        airport.arrivals_queue.put(plane)
+
     print('Producer: Done')
-
-
-running = True
-
-
-@execution_duration
-def do_backup():
-    """
-    save data
-    """
-    while running:
-        time.sleep(3)
-        airport.export_arrivals()
-        time.sleep(3)
-        airport.export_departures()
 
 
 threads: list[th.Thread] = []
 
-
 if __name__ == "__main__":
+
     # queue producer
     thread_produce_queue_arrive = th.Thread(target=thread_produce_queue_arrive)
     threads.append(thread_produce_queue_arrive)
@@ -199,16 +170,10 @@ if __name__ == "__main__":
     thread_consume_depart_queue = th.Thread(target=thread_consume_depart_queue)
     threads.append(thread_consume_depart_queue)
 
-    # backup started separately to join it with the main thread at the end to get all the data
-    thread_backup = th.Thread(target=do_backup)
-    thread_backup.start()
-
     for t in threads:
         t.start()
 
     for t in threads:
         t.join()
 
-    # break the while loop
-    running = False
-    thread_backup.join()
+    do_backup_json()

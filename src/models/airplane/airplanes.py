@@ -8,4 +8,3 @@ class AirplaneDomesticFlight(Airplane):
 
 class AirplaneInternationalFlight(Airplane):
     flight_type = 'International'
-
