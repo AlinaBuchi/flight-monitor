@@ -35,11 +35,11 @@ class Airport:
         self.lock = Lock()
         self.connector = MongoConnector()
 
-        runways_data = self.connector.read("runways")
+        runways_data = self.connector.list("runways")
         # initialize Runway objects with data from DB
         self.runways = [Runway(runway_data["number"]) for runway_data in runways_data]
 
-        gates_data = self.connector.read("gates")
+        gates_data = self.connector.list("gates")
         self.gates = []
         # initialize Gate objects with data from DB
         for gate in gates_data:
