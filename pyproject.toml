@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "flight-monitor"
 version = "0.1.0"
-description = "Flight monitor with random generated planes acting as threads"
+description = "Flight monitor"
 authors = ["Alina Craciun <alina_florina_buchi@yahoo.com>"]
 readme = "README.md"
 packages = [{include = "flight-monitor"}]

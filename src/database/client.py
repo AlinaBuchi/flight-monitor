@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from pymongo.collection import Collection
-from typing import List, Dict, Any
+from typing import List, Any
 from bson.objectid import ObjectId
 
 
@@ -14,7 +14,10 @@ class MongoConnector(Singleton, StorageObject):
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
-            cls._instance.client = MongoClient("mongodb://localhost:27017")
+            # for docker usage:
+            cls._instance.client = MongoClient("mongodb://database:27017")
+            # for other cases:
+            # cls._instance.client = MongoClient("mongodb://localhost:27017:27017")
             cls._instance.planes_collection = cls._instance.client["flight_monitor"]["planes"]
             cls._instance.gates_collection = cls._instance.client["flight_monitor"]["gates"]
             cls._instance.runways_collection = cls._instance.client["flight_monitor"]["runways"]
@@ -46,7 +49,7 @@ class MongoConnector(Singleton, StorageObject):
 
         return result
 
-    def list(self, collection_name: str, search_params: dict) -> List[dict]:
+    def list(self, collection_name: str, search_params: dict = None) -> List[dict]:
         collection = self.select_collection(collection_name)
         result = collection.find(search_params)
         items = list(result)

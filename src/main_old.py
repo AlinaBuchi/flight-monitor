@@ -111,7 +111,7 @@ def thread_consume_depart_queue() -> None:
         Queue to consume departure queue if we have items.
         if plane can't depart after being taken from the queue, we put it back in again.
         Count to break the loop - in place.
-        """
+    """
     count = 0
     time.sleep(10)
     while True:
@@ -134,7 +134,7 @@ def thread_produce_queue_arrive():
     """
         Queue to produce planes.
         if plane can't arrive, we put it in the arrival queue.
-        """
+    """
     print('Producer: Running')
     # generate work - 5 planes
     for i in range(5):
@@ -157,6 +157,10 @@ def thread_produce_queue_arrive():
 threads: list[th.Thread] = []
 
 if __name__ == "__main__":
+    """
+    If we run this, we get generated a thread of 5 random planes generated and inserted in DB.
+    After which we land them and depart them as threads.
+    """
 
     # queue producer
     thread_produce_queue_arrive = th.Thread(target=thread_produce_queue_arrive)

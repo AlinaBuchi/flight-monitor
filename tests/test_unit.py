@@ -63,14 +63,14 @@ def repair_plane_2():
 
 
 def test_gate_allocation_domestic(my_airport, domestic_plane):
-    gate_number = my_airport.gate_allocation(domestic_plane)
+    my_airport.gate_allocation(domestic_plane)
     for gate in my_airport.gates:
         if gate.number == domestic_plane.gate_number and gate is isinstance(gate, DomesticGate):
             assert gate.get_occupied() is True
 
 
 def test_gate_allocation_international(my_airport, international_plane):
-    gate_number = my_airport.gate_allocation(international_plane)
+    my_airport.gate_allocation(international_plane)
     for gate in my_airport.gates:
         if gate.number == international_plane.gate_number and gate is isinstance(gate, InternationalGate):
             assert gate.get_occupied() is True
