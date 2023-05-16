@@ -10,6 +10,7 @@ gate and runway allocation, landing, take-off.
 - [Usage](#usage)
 - [API](#api)
 - [Tests](#tests)
+- [Acknowledgements](#acknowledgements)
 
 ## About
 
@@ -69,12 +70,12 @@ use <docker-compose build> to build the image and
 ## Usage
 - main.py   
 
--> to run the app locally in the terminal. For this, use: 
+-> to run the app locally in the terminal. For this, uncomment: 
 uvicorn.run(app, host="127.0.0.1", port=5000, log_level="info")  
 
--> for local usage: in database.client --> cls._instance.client = MongoClient("mongodb://localhost:27017:27017")  
+-> for local usage: in database.client --> cls._instance.client = MongoClient("mongodb://localhost:27017")  
 
--> to use for Docker. For this, use: 
+-> to use for Docker, uncomment: 
 uvicorn.run(app, host="0.0.0.0", port=5000, log_level="info") --> access via all IPs
 
 ->  for docker make sure the dependency from docker-compose.yaml is properly set with the DB connection in database.client -->
@@ -85,6 +86,7 @@ cls._instance.client = MongoClient("mongodb://database:27017")
 - main_old.py  
 
 -> to use threads to automatically generate planes, land them and take-off
+-> do not forget to make sure the URI in database.client is set to cls._instance.client = MongoClient("mongodb://database:27017")
 
 ## API
 API available for airplanes. 
@@ -96,3 +98,6 @@ Pytest fixtures - mostly used.
 To run tests, make sure in __init__.py in src you have <import sys
 sys.path.append('./src')>.
 Run testes with command <pytest> --> +options (-vv etc)
+
+## Acknowledgements
+Many thanks to Alexandru Niculae from Nenos Academy for his feedback and guidance.

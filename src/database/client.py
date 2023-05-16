@@ -17,21 +17,18 @@ class MongoConnector(Singleton, StorageObject):
             # for docker usage:
             cls._instance.client = MongoClient("mongodb://database:27017")
             # for other cases:
-            # cls._instance.client = MongoClient("mongodb://localhost:27017:27017")
-            cls._instance.planes_collection = cls._instance.client["flight_monitor"]["planes"]
-            cls._instance.gates_collection = cls._instance.client["flight_monitor"]["gates"]
-            cls._instance.runways_collection = cls._instance.client["flight_monitor"]["runways"]
+            # cls._instance.client = MongoClient("mongodb://localhost:27017")
+            cls._instance.collections = {
+                'planes': cls._instance.client["flight_monitor"]["planes"],
+                'gates': cls._instance.client["flight_monitor"]["gates"],
+                'runways': cls._instance.client["flight_monitor"]["runways"]
+            }
         return cls._instance
 
     def select_collection(self, collection_name: str) -> Collection:
-        if collection_name == "planes":
-            return self.planes_collection
-        elif collection_name == "gates":
-            return self.gates_collection
-        elif collection_name == "runways":
-            return self.runways_collection
-        else:
+        if collection_name not in self.collections:
             raise ValueError("Invalid collection name")
+        return self.collections[collection_name]
 
     def insert_one(self, collection_name: str, document: dict) -> Any:
         collection = self.select_collection(collection_name)
