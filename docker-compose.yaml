@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  flight-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/src
+    ports:
+      - "5000:5000"
+    depends_on:
+      - database
+
+  database:
+    image: mongo
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+
+volumes:
+  mongo-data:

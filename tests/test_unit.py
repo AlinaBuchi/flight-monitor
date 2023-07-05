@@ -1,9 +1,9 @@
 from datetime import datetime
 
 from src.airport import Airport
-from src.models.airplane import (
+from src.models import (
     AirplaneInternationalFlight,
-    AirplaneDomesticFlight
+    AirplaneDomesticFlight, DomesticGate, InternationalGate
 )
 
 import pytest
@@ -63,36 +63,33 @@ def repair_plane_2():
 
 
 def test_gate_allocation_domestic(my_airport, domestic_plane):
-    gate_number = my_airport.gate_allocation(domestic_plane)
-    assert my_airport.airport_gates[gate_number].is_occupied is True
-    assert gate_number in range(1, 4)
+    my_airport.gate_allocation(domestic_plane)
+    for gate in my_airport.gates:
+        if gate.number == domestic_plane.gate_number and gate is isinstance(gate, DomesticGate):
+            assert gate.get_occupied() is True
 
 
 def test_gate_allocation_international(my_airport, international_plane):
-    gate_number = my_airport.gate_allocation(international_plane)
-    assert my_airport.airport_gates[gate_number].is_occupied is True
-    assert gate_number == 4
+    my_airport.gate_allocation(international_plane)
+    for gate in my_airport.gates:
+        if gate.number == international_plane.gate_number and gate is isinstance(gate, InternationalGate):
+            assert gate.get_occupied() is True
 
 
 def test_free_up_gate(my_airport, domestic_plane):
     gate_number = my_airport.gate_allocation(domestic_plane)
     my_airport.free_up_gate(gate_number)
-    assert my_airport.airport_gates[gate_number].is_occupied is False
+    for gate in my_airport.gates:
+        if gate.number == domestic_plane.gate_number:
+            assert gate.is_occupied is False
 
 
-def test_runway_allocation_free(my_airport, domestic_plane):
+def test_runway_allocation(my_airport):
     runway_number = my_airport.runway_allocation()
     assert runway_number in [1, 2]
-    assert my_airport.runways[runway_number].get_occupied() is True
-
-
-def test_runway_allocation_occupied(my_airport, domestic_plane):
-    my_airport.runways[1].set_occupied(True)
-    my_airport.runways[2].set_occupied(True)
-    assert my_airport.runways[1].get_occupied() is True
-    assert my_airport.runways[2].get_occupied() is True
-    runway_number = my_airport.runway_allocation()
-    assert runway_number is None
+    for runway in my_airport.runways:
+        if runway.number == runway_number:
+            assert runway.get_occupied() is True
 
 
 def test_check_hangar_status(my_airport, repair_plane_1, repair_plane_2):

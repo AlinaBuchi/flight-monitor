@@ -1,16 +1,19 @@
 [tool.poetry]
 name = "flight-monitor"
 version = "0.1.0"
-description = "Flight monitor with random generated planes acting as threads"
+description = "Flight monitor"
 authors = ["Alina Craciun <alina_florina_buchi@yahoo.com>"]
 readme = "README.md"
-packages = [{include = "flight_monitor"}]
+packages = [{include = "flight-monitor"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 pytest = "^7.2.1"
 flake8 = "^6.0.0"
 pydantic = "^1.10.6"
+pymongo = "^4.3.3"
+uvicorn = "^0.22.0"
+fastapi = "^0.95.2"
 
 
 [build-system]

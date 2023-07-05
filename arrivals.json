@@ -1,0 +1,24 @@
+[
+    {
+        "airplane_id": 1234,
+        "model": "Airbus 123",
+        "reason": "destination",
+        "flight_time": "2023-03-07T07:00:00",
+        "origin": "Singapore",
+        "destination": "Springvale",
+        "flight_type": "International",
+        "departure_time": null,
+        "gate_number": null
+    },
+    {
+        "airplane_id": 123456,
+        "model": "Airbus 123",
+        "reason": "destination",
+        "flight_time": "2023-03-07T13:00:00",
+        "origin": "Wintervale",
+        "destination": "Springvale",
+        "flight_type": "Domestic",
+        "departure_time": null,
+        "gate_number": null
+    }
+]
