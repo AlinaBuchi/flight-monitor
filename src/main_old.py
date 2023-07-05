@@ -160,6 +160,8 @@ if __name__ == "__main__":
     """
     If we run this, we get generated a thread of 5 random planes generated and inserted in DB.
     After which we land them and depart them as threads.
+    
+    MAKE SURE YOU HAVE THE DATABASE CONNECTION ON LOCAL HOST AND NOT THE SETTINGS FOR DOCKER --> uncomment in database/client.py
     """
 
     # queue producer

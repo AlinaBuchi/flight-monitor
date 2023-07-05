@@ -16,7 +16,7 @@ class MongoConnector(Singleton, StorageObject):
             cls._instance = super().__new__(cls)
             # for docker usage:
             cls._instance.client = MongoClient("mongodb://database:27017")
-            # for other cases:
+            # for LOCALHOST cases:
             # cls._instance.client = MongoClient("mongodb://localhost:27017")
             cls._instance.collections = {
                 'planes': cls._instance.client["flight_monitor"]["planes"],

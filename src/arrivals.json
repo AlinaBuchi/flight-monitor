@@ -1,0 +1,57 @@
+[
+    {
+        "airplane_id": 619071,
+        "model": "Boeing 787",
+        "reason": "destination",
+        "flight_time": "2023-03-07T13:14:00",
+        "origin": "Autumnvale",
+        "destination": "Springvale",
+        "flight_type": "Domestic",
+        "departure_time": null,
+        "gate_number": 1
+    },
+    {
+        "airplane_id": 912909,
+        "model": "Boeing 737",
+        "reason": "destination",
+        "flight_time": "2023-03-07T21:00:00",
+        "origin": "Prague",
+        "destination": "Springvale",
+        "flight_type": "International",
+        "departure_time": null,
+        "gate_number": 4
+    },
+    {
+        "airplane_id": 421689,
+        "model": "Boeing 787",
+        "reason": "destination",
+        "flight_time": "2023-03-07T21:00:00",
+        "origin": "Prague",
+        "destination": "Springvale",
+        "flight_type": "International",
+        "departure_time": null,
+        "gate_number": 4
+    },
+    {
+        "airplane_id": 242145,
+        "model": "Boeing 737",
+        "reason": "destination",
+        "flight_time": "2023-03-07T21:00:00",
+        "origin": "Singapore",
+        "destination": "Springvale",
+        "flight_type": "International",
+        "departure_time": null,
+        "gate_number": 4
+    },
+    {
+        "airplane_id": 716991,
+        "model": "Boeing 737",
+        "reason": "destination",
+        "flight_time": "2023-03-07T07:00:00",
+        "origin": "Prague",
+        "destination": "Springvale",
+        "flight_type": "International",
+        "departure_time": null,
+        "gate_number": 4
+    }
+]

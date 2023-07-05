@@ -49,6 +49,19 @@ For a proper functioning of the airport and compliance with standards, the follo
 -> departure time  
 -> runway used
 
+The project has been created to run both locally connected to the mongo database
+while also running on docker. In both cases endpoints related to airplanes 
+can be accessed and checked as well on Postman.
+
+Thread example running in terminal:
+![thread_example](src/images/thread_example.PNG)
+
+Postman endpoint:
+![postman_endpoint](src/images/postman_endpoint.PNG)
+
+Docker container running:
+![docker_container](src/images/docker_container.PNG)
+
 ## Technologies
 python = "^3.10"  
 pytest = "^7.2.1"  
@@ -57,7 +70,7 @@ pydantic = "^1.10.6"
 pymongo = "^4.3.3"  
 fastapi = "^0.95.1"  
 uvicorn = "^0.22.0"  
-Docker
+Docker  
 MongoDB
 
 ## Installing

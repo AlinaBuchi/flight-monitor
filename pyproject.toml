@@ -12,8 +12,8 @@ pytest = "^7.2.1"
 flake8 = "^6.0.0"
 pydantic = "^1.10.6"
 pymongo = "^4.3.3"
-fastapi = "^0.95.1"
 uvicorn = "^0.22.0"
+fastapi = "^0.95.2"
 
 
 [build-system]
